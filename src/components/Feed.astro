@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import PostCard from './PostCard.astro';
+
+// Fetch all posts
+const allPosts = await getCollection('posts');
+
+// Filter out drafts and sort by publishDate descending
+const feedPosts = allPosts
+  .filter((post) => !post.data.isDraft)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+---
+
+<div class="mx-auto max-w-4xl px-4 py-8">
+  <div class="mb-6 flex items-center justify-end">
+    <button 
+      id="viewToggle" 
+      class="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+    >
+      Toggle View
+    </button>
+  </div>
+
+  <div 
+    id="feedContainer" 
+    class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 transition-all duration-300"
+  >
+    {feedPosts.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+</div>
+
+<script>
+  // Simple view toggle logic
+  const toggleBtn = document.getElementById('viewToggle');
+  const container = document.getElementById('feedContainer');
+  
+  if (toggleBtn && container) {
+    // Load preference
+    const isList = localStorage.getItem('feedView') === 'list';
+    if (isList) {
+      container.classList.remove('sm:grid-cols-2', 'md:grid-cols-3');
+      container.classList.add('max-w-xl', 'mx-auto', 'flex', 'flex-col');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const currentlyList = container.classList.contains('max-w-xl');
+      
+      if (currentlyList) {
+        // Switch to grid
+        container.classList.remove('max-w-xl', 'mx-auto', 'flex', 'flex-col');
+        container.classList.add('sm:grid-cols-2', 'md:grid-cols-3');
+        localStorage.setItem('feedView', 'grid');
+      } else {
+        // Switch to list
+        container.classList.remove('sm:grid-cols-2', 'md:grid-cols-3');
+        container.classList.add('max-w-xl', 'mx-auto', 'flex', 'flex-col');
+        localStorage.setItem('feedView', 'list');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,23 @@
+# .specs/data_schema.spec.yaml
+version: "0.0.1"
+
+# Definição do esquema para a coleção de posts
+collections:
+  posts:
+    type: "content-collection"
+    schema:
+      id: "string"           # ID único do post
+      imageUrl: "string"     # URL da imagem (ou caminho local)
+      linkUrl: "string"      # O link de destino (produto, artigo, etc)
+      caption: "string"      # Legenda que aparece no hover
+      publishDate: "date"    # Data para manter o feed ordenado
+      isDraft: "boolean"     # Para você preparar posts sem publicar imediatamente
+      category: 
+        type: "enum"
+        values: ["review", "tutorial", "setup", "lifestyle"]
+
+# Regras de ordenação para o Antigravity programar o feed
+logic:
+  feed_sorting:
+    field: "publishDate"
+    order: "desc"           # Mais recentes primeiro, igual ao Instagram

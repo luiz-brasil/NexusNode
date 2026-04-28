@@ -1,0 +1,57 @@
+# .specs/ui_components.spec.yaml
+version: "0.0.1"
+
+design_tokens:
+  colors:
+    background: "#ffffff"
+    overlay: "rgba(0, 0, 0, 0.5)"
+    text_light: "#ffffff"
+  spacing:
+    grid_gap: "3px" # Simula o espaçamento fino do Instagram
+
+components:
+  # Layout do Perfil (Topo)
+  ProfileHeader:
+    structure:
+      type: "section"
+      class: "flex flex-col items-center py-8 border-b border-gray-200"
+    elements:
+      - avatar:
+          type: "image"
+          class: "w-24 h-24 rounded-full border border-gray-300 object-cover"
+      - username:
+          type: "h2"
+          class: "mt-4 font-semibold text-xl"
+      - bio:
+          type: "p"
+          class: "mt-2 text-sm text-gray-600 text-center px-4 max-w-sm"
+
+  # Grid de Posts (Feed)
+  LinkGrid:
+    structure:
+      type: "div"
+      class: "grid grid-cols-3 gap-[3px] w-full max-w-screen-md mx-auto"
+    elements:
+      - slot: "LinkItem"
+
+  # O Item do Feed (Imitando o post do Instagram)
+  LinkItem:
+    structure:
+      type: "anchor"
+      class: "relative aspect-square overflow-hidden group cursor-pointer"
+    elements:
+      - thumbnail:
+          type: "image"
+          class: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      - overlay:
+          type: "div"
+          class: "absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+      - label:
+          type: "span"
+          class: "text-white text-xs font-medium px-2 text-center"
+
+  # Container Principal
+  MainLayout:
+    structure:
+      type: "main"
+      class: "min-h-screen bg-white"

@@ -1,0 +1,28 @@
+---
+import Feed from '../components/Feed.astro';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>NexusNode</title>
+		<script>
+			// Apply layout preference immediately to prevent FOUC
+			if (localStorage.getItem('feedView') === 'list') {
+				document.documentElement.classList.add('feed-list-view');
+			}
+		</script>
+	</head>
+	<body class="bg-white text-gray-900">
+		<header class="border-b border-gray-200 py-6 text-center">
+			<h1 class="text-3xl font-bold tracking-tight">NexusNode</h1>
+			<p class="mt-2 text-sm text-gray-500">Your high-performance link hub</p>
+		</header>
+		<main>
+			<Feed />
+		</main>
+	</body>
+</html>

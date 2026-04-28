@@ -1,20 +1,38 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+# Identificação do projeto para o engine do Antigravity
+project:
+  name: "NexusNode"
+  version: "0.0.1"
+  output_root: "../src" # O código será gerado dentro da pasta src do projeto
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+# Configurações do Gerador (Onde definimos Astro + Vite)
+generator:
+  framework: "astro"
+  compiler: "vite"
+  language: "typescript" # Recomendado para maior segurança no SDD
+  styling: 
+    processor: "tailwind"
+    config_path: "../tailwind.config.mjs"
+
+# Mapeamento de Especificações (Onde cada spec se torna código)
+specs_mapping:
+  # Transforma definições de UI em componentes Astro
+  - source: "ui_components.spec.yaml"
+    target_dir: "components/generated"
+    template: "astro-component"
+
+  # Transforma definições de navegação em páginas Astro
+  - source: "navigation.spec.yaml"
+    target_dir: "pages"
+    template: "astro-page"
+
+  # Transforma definições de dados (Links) em esquemas do Astro Content Collections
+  - source: "data_schema.spec.yaml"
+    target_dir: "content/config.ts"
+    template: "astro-content-schema"
+
+# Configurações globais de Build (opcional)
+build_settings:
+  clean_output: true # Limpa os arquivos gerados anteriormente antes de criar novos
+  format_code: true  # Roda o Prettier/Linter após a geração

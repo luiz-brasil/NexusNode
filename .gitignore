@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+
+# Astro generated files
+.astro/
+
+# macOS / OS files
+.DS_Store
+Thumbs.db
+
+# Agent / Workspace scratch files
+.agent/scratch/
